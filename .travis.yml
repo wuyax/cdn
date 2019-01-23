@@ -6,7 +6,8 @@ after_script:
   - pwd
   - ls -l
   - cd ..
-  - git init
+  - git remote -v
+  - git branch
   - git config user.name "${U_NAME}"
   - git config user.email "${U_EMAIL}"
   - git add -A
