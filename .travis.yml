@@ -1,5 +1,5 @@
 script:
-  - cd js
+  - cd js/
   - curl -O http://mrdoob.github.io/stats.js/build/stats.min.js
 
 after_script:
