@@ -3,6 +3,9 @@ script:
   - curl -O http://mrdoob.github.io/stats.js/build/stats.min.js
 
 after_script:
+  - pwd
+  - ls -l
+  - git init
   - git config user.name "${U_NAME}"
   - git config user.email "${U_EMAIL}"
   - git add -A
