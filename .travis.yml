@@ -7,7 +7,8 @@ after_script:
   - ls -l
   - cd ..
   - git remote -v
-  - git branch
+  - git branch -v
+  - git checkout master
   - git config user.name "${U_NAME}"
   - git config user.email "${U_EMAIL}"
   - git add -A
