@@ -1,3 +1,5 @@
+before_script:
+  - git checkout master
 script:
   - cd js/
   - curl -O http://mrdoob.github.io/stats.js/build/stats.min.js
