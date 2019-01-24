@@ -23,6 +23,6 @@ branches:
   only:
     - master
 env:
- GH_COMMIT="set env var"
  global:
    - GH_REF: github.com/wuyax/cdn.git
+   - GH_COMMIT: "set env var"
