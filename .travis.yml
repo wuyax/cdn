@@ -1,14 +1,21 @@
 before_script:
   - git checkout master
-  - cd js/
+  # - cd js/
+  - url="${D_URL}"
+  - fullName=${url##*/}
+  - fileName=${fullName%%.*}
+  - echo ${fileName}
+  - fileType=${fullName##*.}
+  - echo ${fileType}
+  - version=${D_VERSION}
 
 script:
-  - curl -O http://mrdoob.github.io/stats.js/build/stats.min.js
+  - curl -o ./${fileType}/${fileName}/${version}/${fullName} --create-dirs ${url}
 
 after_script:
   - pwd
   - ls -l
-  - cd ..
+  # - cd ..
   - git remote -v
   - git branch -v
   - git config user.name "${U_NAME}"
@@ -16,7 +23,7 @@ after_script:
   - git add -A
   - git commit -m "${GH_COMMIT}"
   - git push "https://${GH_TOKEN}@${GH_REF}" master
-  - cd -
+  # - cd -
 # E: Build LifeCycle
 
 branches:
@@ -26,3 +33,5 @@ env:
  global:
    - GH_REF: github.com/wuyax/cdn.git
    - GH_COMMIT: "set env var"
+   - D_URL: "http://mrdoob.github.io/stats.js/build/stats.min.js"
+   - D_VERSION: "1.1.1"
