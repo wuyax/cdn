@@ -66,8 +66,49 @@ xhr({
 - 在TravisCI里开启对该仓库的监听
 
 ## TODO
-1. 重复提交的文件不触发TravisCI的`build`，这个可能需要在前端处理
-2. 文件分类管理，虽说我们的API可以完全覆盖默认的`.travis.yml`的配置，最好还是让API做关键的事情
+重复提交的文件不触发TravisCI的`build`，这个可能需要在前端处理  
+文件分类管理，虽说我们的API可以完全覆盖默认的`.travis.yml`的配置，最好还是让API做关键的事情
+
+1. 通过接口传递多种信息，以变量的形式发送
+  - 文件url
+  - penID
+  - commit msg `OPTIONAL`
+2. 触发trigger以后新建临时文件夹 `/home/travis/temp`
+3. 将文件下载到临时文件夹 `temp`
+4. 下载成功解析文件类型和文件版本
+  - 根据文件名创建与文件同名文件夹，在文件夹下面创建版本号文件夹
+    - `cd js` # 如果是JS文件切换到 `js` 目录， `css` 切换到 `css` 目录，其它类型切换到 `other`目录
+    - `mkdir namexxx`
+    - `cd namexxx`
+    - `mkdir versionxxxx`
+    - `cd versionxxxx`
+  - 复制到当前目录 `cp /home/travis/temp/jquery.min.js ./`
+  - `cd ../..` // 切换到顶层目录
+5. 下载成功/失败发送请求到指定服务器携带以下参数，
+  ```js
+  // 下载成功发送的参数
+  {
+    success: true,
+    fileName: 'jquery', // 文件名第一个.前面的部分
+    fileType: 'js', // 文件后缀
+    version: '1.12', // 读取文件 v或者version 后面的字符串
+    penID: 'xjnveivdj', // 传递的变量
+    url: 'https://wuyax.github.io/cdn/js/jquery/1.12/jquery.min.js' // 拼接的字符串
+  }
+  // 失败发送的参数
+  {
+    success: false,
+    penID: 'xjnveivdj'
+  }
+  ```
+6. 开始git流程
+  - git remote -v
+  - git branch -v
+  - git config user.name "${U_NAME}"
+  - git config user.email "${U_EMAIL}"
+  - git add -A
+  - git commit -m "${GH_COMMIT}"
+  - git push "https://${GH_TOKEN}@${GH_REF}" master
 
 ## 缺陷
 慢，是致命缺陷，同一时间触发多次build会出现任务队列的情况。
