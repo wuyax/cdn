@@ -1,37 +1,41 @@
 before_script:
+  # to fix auto checkout
   - git checkout master
-  # - cd js/
+  # set url
   - url="${D_URL}"
+  # get file information
   - fullName=${url##*/}
   - fileName=${fullName%%.*}
-  - echo ${fileName}
+  - echo ${fileName} #for debug
   - fileType=${fullName##*.}
-  - echo ${fileType}
+  - echo ${fileType} #for debug
   - version=${D_VERSION}
 
 script:
+  # download file
   - curl -o ./${fileType}/${fileName}/${version}/${fullName} --create-dirs ${url}
+  # todo call back API
 
 after_script:
   - pwd
   - ls -l
-  # - cd ..
   - git remote -v
   - git branch -v
+  # push to github repo
   - git config user.name "${U_NAME}"
   - git config user.email "${U_EMAIL}"
   - git add -A
   - git commit -m "${GH_COMMIT}"
   - git push "https://${GH_TOKEN}@${GH_REF}" master
-  # - cd -
 # E: Build LifeCycle
 
 branches:
   only:
     - master
+# default env variable, it will be replace by API variable
 env:
  global:
    - GH_REF: github.com/wuyax/cdn.git
-   - GH_COMMIT: "set env var"
+   - GH_COMMIT: "set_env_var"
    - D_URL: "http://mrdoob.github.io/stats.js/build/stats.min.js"
-   - D_VERSION: "1.1.1"
+   - D_VERSION: "1.0.0"
