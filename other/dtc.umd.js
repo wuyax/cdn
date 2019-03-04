@@ -4246,7 +4246,26 @@
       return {}.toString.call(input).slice(8, -1).toLowerCase();
     }
 
-    var cookieSet = require('./cookieSet');
+    /**
+     * 设置cookie
+     * @memberof  util
+     * @param {String} name cookie名称
+     * @param {String} value cookie值
+     * @param {Number} days 过期时间（天数）
+     * @author 褚甜甜  <ctt@jusfoun.com>
+     * @example
+     *   dtc.util.cookieSet('cookieName','value',expires)
+     */
+    function cookieSet(name, value, days) {
+      var expires = "";
+      if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+        expires = "; expires=" + date.toGMTString();
+      }
+      document.cookie = name + "=" + value + expires + "; path=/";
+    }
+
     /**
      * 删除cookie。
      * @memberof  util
@@ -4278,26 +4297,6 @@
         if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
       }
       return null;
-    }
-
-    /**
-     * 设置cookie
-     * @memberof  util
-     * @param {String} name cookie名称
-     * @param {String} value cookie值
-     * @param {Number} days 过期时间（天数）
-     * @author 褚甜甜  <ctt@jusfoun.com>
-     * @example
-     *   dtc.util.cookieSet('cookieName','value',expires)
-     */
-    function cookieSet$1(name, value, days) {
-      var expires = "";
-      if (days) {
-        var date = new Date();
-        date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
-        expires = "; expires=" + date.toGMTString();
-      }
-      document.cookie = name + "=" + value + expires + "; path=/";
     }
 
     /**
@@ -4878,7 +4877,7 @@
       /*--storage--*/
       cookieDel: cookieDel,
       cookieGet: cookieGet,
-      cookieSet: cookieSet$1,
+      cookieSet: cookieSet,
       /*--string--*/
       excerpt: excerpt,
       trim: trim,
