@@ -4373,7 +4373,8 @@
       return id.make(length);
     }
 
-    var _toString = require('../../_base/_toString');
+    var _toString = Object.prototype.toString;
+
     /**
      * 监测数据类型只保留基本的数据类型字段
      * @param {any} value 需要监测的数据类型
@@ -4846,14 +4847,12 @@
       return value != null && (type == 'object' || type == 'function');
     }
 
-    var _toString$1 = Object.prototype.toString;
-
     /**
      * Strict object type check. Only returns true
      * for plain JavaScript objects.
      */
     function isPlainObject(obj) {
-      return _toString$1.call(obj) === '[object Object]';
+      return _toString.call(obj) === '[object Object]';
     }
 
     /*-------------array----------------*/
