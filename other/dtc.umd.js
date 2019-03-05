@@ -4856,7 +4856,7 @@
     }
 
     /*-------------array----------------*/
-    var index = {
+    var util = {
       /*--array--*/
       concat: concat,
       shuffle: shuffle,
@@ -8227,7 +8227,7 @@
     });
     Object.assign(Map3D.prototype, THREE.EventDispatcher.prototype);
 
-    var index$1 = {
+    var vis = {
       Map3D: Map3D
     };
 
@@ -8415,16 +8415,20 @@
       };
     }; // module.exports = Stats
 
-    /* module.exports = {
-      Stats
-    } */
-    var index$2 = {
+    var dev = {
       Stats: Stats
     };
 
-    exports.util = index;
-    exports.vis = index$1;
-    exports.dev = index$2;
+    var index = {
+      util: util,
+      vis: vis,
+      dev: dev
+    };
+
+    exports.default = index;
+    exports.util = util;
+    exports.vis = vis;
+    exports.dev = dev;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 
